@@ -10,7 +10,6 @@ ___INFO___
 
 {
   "displayName": "Studyportals Pixel",
-  "categories": ["ANALYTICS"],
   "description": "Receive data insights about what international students are interested in, what information they need, how they search for their degree options, where they come from and more",
   "securityGroups": [],
   "id": "cvt_temp_public_id",
@@ -35,28 +34,48 @@ ___TEMPLATE_PARAMETERS___
     "displayName": "Account ID",
     "simpleValueType": true,
     "name": "account_id",
-    "type": "TEXT"
+    "type": "TEXT",
+    "valueValidators": [
+      {
+        "type": "NON_EMPTY"
+      }
+    ]
   },
   {
     "type": "TEXT",
     "name": "conversion_value",
     "displayName": "Conversion value",
     "simpleValueType": true,
-    "help": "This is the value of the \"val\u003d\" parameter"
+    "help": "This is the value of the \"val\u003d\" parameter",
+    "valueValidators": [
+      {
+        "type": "NON_EMPTY"
+      }
+    ]
   },
   {
     "type": "TEXT",
     "name": "conversion_comission",
     "displayName": "Conversion comission",
     "simpleValueType": true,
-    "help": "This is the value of the \"com\u003d\" parameter"
+    "help": "This is the value of the \"com\u003d\" parameter",
+    "valueValidators": [
+      {
+        "type": "NON_EMPTY"
+      }
+    ]
   },
   {
     "type": "TEXT",
     "name": "conversion_comission_percentage",
     "displayName": "Conversion comission percentage",
     "simpleValueType": true,
-    "help": "This is the value of the \"comperc\u003d\" parameter"
+    "help": "This is the value of the \"comperc\u003d\" parameter",
+    "valueValidators": [
+      {
+        "type": "NON_EMPTY"
+      }
+    ]
   },
   {
     "type": "TEXT",
@@ -80,6 +99,7 @@ const logToConsole = require('logToConsole');
 const sendPixel = require('sendPixel');
 const queryPermission = require('queryPermission');
 const generateRandom = require('generateRandom');
+const encodeUriComponent = require('encodeUriComponent');
 
 const id = data.account_id;
 const val = data.conversion_value;
@@ -90,7 +110,7 @@ const param = data.conversion_parameter || 'empty'; //default value for param mu
 const random = generateRandom(0, 2147483647); //used for cache busting
 
 const pixelUrl = 'https://www.clickmeter.com/conversion.aspx';
-const trackingUrl = pixelUrl + '?id=' + id + '&val=' + val + '&param=' + param + '&com=' + com + '&comperc=' + comperc + '&gtmcb=' + random;
+const trackingUrl = pixelUrl + '?id=' + encodeUriComponent(id) + '&val=' + encodeUriComponent(val) + '&param=' + encodeUriComponent(param) + '&com=' + encodeUriComponent(com) + '&comperc=' + encodeUriComponent(comperc) + '&gtmcb=' + random;
 
 if(queryPermission('send_pixel', pixelUrl)) {
   sendPixel(trackingUrl, data.gtmOnSuccess, data.gtmOnFailure);
@@ -156,9 +176,6 @@ scenarios: []
 
 ___NOTES___
 
-Desarrollado con ❤ por:
-Alfonso. 
-Txema.
-Brais.
+Developed by: Alfonso, Brais and Txema
 
 
