@@ -1,3 +1,5 @@
+homepage: "https://www.luratic.com"
+documentation: "https://www.luratic.com/posts/templates/tags/studyportals/"
 versions:
   - sha: ab04c2a272b5aad9f23b68f81b4c1b4602360e81
     changeNotes: Fixes and new validations
